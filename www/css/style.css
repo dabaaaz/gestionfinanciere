@@ -8761,6 +8761,11 @@ a.button {
   margin-bottom: 20px;
 }
 
+/* HOME GLOBAL */
+#homecontainer p, #homecontainer h3, #homecontainer h4, #homecontainer h5 {
+  color: white;
+}
+
 #homecontainer .scroll {
   height: 100%;
 }
@@ -8768,6 +8773,11 @@ a.button {
 #homecontainer .row {
   height: 50%;
   padding: 0;
+}
+
+#homecontainer .col-50 {
+  padding-top: 33%;
+  text-align: center;
 }
 
 #colone {
@@ -8784,4 +8794,16 @@ a.button {
 
 #colfour {
   background: #018f2a;
+}
+
+/* SLIDES */
+#homecontainer .menu {
+  background: black;
+  color: white;
+}
+
+/* LEFT SIDE */
+ion-side-menu .ion-ios7-close-outline {
+  font-size: 30px;
+  font-weight: bold;
 }
