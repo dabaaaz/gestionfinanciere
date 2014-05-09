@@ -27,19 +27,22 @@ $greenone: #D1FB8B;
 $greentwo: #019159;
 $greenthree: #488F2B;
 $greenfour: #018F2A;
+$height: 100%;
 
 /* HOME GLOBAL */
 
-#homecontainer p, #homecontainer h3, #homecontainer h4, #homecontainer h5 {
-	color: $white;
+#homecontainer {
+	p, h3, h4, h5 {
+		color: $white;
+	}
 }
 
 #homecontainer .scroll {
-	height: 100%;
+	height: $height;
 }
 
 #homecontainer .row {
-	height: 50%;
+	height: $height/2;
 	padding: 0;
 }
 
