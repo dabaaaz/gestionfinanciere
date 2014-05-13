@@ -1,0 +1,83 @@
+<ion-content scroll="false" id="homecontainer" padding="0">
+  <ion-side-menus>
+    <!-- Center content -->
+    <ion-side-menu-content ng-controller="ContentController">
+      <ion-view>
+        <div class="row">
+          <div id="colone" ng-click="goto('tab.factures')" class="col-50">
+            <p>Environ</p>
+            <h3>1200 €</h3>
+            <p>net par mois</p>
+          </div>
+          <div id="coltwo" class="col-50">
+            <p>CA de<p>
+            <h4>33400 €</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div id="colthree" class="col-50">
+            <p>Total de</p>
+            <h5>11700€</h5>
+            <p>de T.V.A.</p>
+          </div>
+          <div id="colfour" class="col-50">
+            <p>Total de</p>
+            <h5>15000€</h5>
+            <p>de charge</p>
+          </div>
+        </div>
+      </ion-view>
+    </ion-side-menu-content>
+
+    <!-- Left menu -->
+    <ion-side-menu class="menu" side="left">
+      <h4>Préférences</h4>
+      <i class="icon ion-ios7-close-outline"></i>
+
+      <ion-list>
+        <ion-item class="item item-input item-stacked-label">
+          <span class="input-label">Taux de T.V.A. (par défaut)</span>
+          <input type="text" value="20">
+        </ion-item>
+        <ion-item class="item item-input item-stacked-label">
+          <span class="input-label">Taux de charges (par défaut)</span>
+          <input type="text" value="30">
+        </ion-item>
+      </ion-list>
+
+    </ion-side-menu>
+
+    <!-- Right menu -->
+    <ion-side-menu class="menu" side="right">
+      <i class="icon ion-ios7-close-outline"></i>
+      <h4>Ajouter facture</h4>
+
+      <ion-list>
+        <ion-item class="item item-input item-stacked-label">
+          <span class="input-label">Nom du client</span>
+          <input type="text" value="ONZEDIX">
+        </ion-item>
+        <ion-item class="item item-input item-stacked-label">
+          <span class="input-label">Total HT</span>
+          <input class="input-toggle-ttc" type="text" value="1200">
+          <ion-toggle class="toggle-ttc" ng-model="airplaneMode" toggle-class="toggle-calm">TTC ?</ion-toggle>
+        </ion-item>
+        <ion-item class="item item-input item-stacked-label">
+          <span class="input-label">Date d'envoi</span>
+          <input type="text" placeholder="14 Juillet 2014">
+        </ion-item>
+        <ion-item class="fiftycent item item-input item-stacked-label">
+          <span class="input-label">Charges</span>
+          <input type="text" placeholder="30">
+        </ion-item>
+        <ion-item class="fiftycent item item-input item-stacked-label">
+          <span class="input-label">T.V.A.</span>
+          <input type="text" placeholder="20">
+        </ion-item>
+        <ion-item class="item item-input item-stacked-label">
+          <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Facture validée ?</ion-toggle>
+        </ion-item>
+      </ion-list>
+    </ion-side-menu>
+  </ion-side-menus>
+</ion-content>

@@ -8799,11 +8799,60 @@ a.button {
 /* SLIDES */
 #homecontainer .menu {
   background: black;
-  color: white;
+  padding-top: 10px;
 }
-
-/* LEFT SIDE */
-ion-side-menu .ion-ios7-close-outline {
+#homecontainer .menu h4, #homecontainer .menu i, #homecontainer .menu span {
+  color: #f6f6f5;
+}
+#homecontainer .menu h4 {
+  float: left;
+  margin-left: 10px;
+}
+#homecontainer .menu i {
+  float: right;
+  margin-right: 15px;
+  margin-top: 7px;
+}
+#homecontainer .menu .list {
+  margin-top: 30%;
+}
+#homecontainer .menu .item-stacked-label {
+  border: none;
+}
+#homecontainer .menu .ion-ios7-close-outline {
   font-size: 30px;
   font-weight: bold;
+}
+
+#homecontainer .menu-right h4 {
+  float: right;
+  margin-right: 10px;
+}
+#homecontainer .menu-right i {
+  float: left;
+  margin-left: 15px;
+}
+#homecontainer .menu-right .input-toggle-ttc {
+  width: 50%;
+  float: left;
+}
+#homecontainer .menu-right .item-toggle {
+  background: transparent;
+  border: none;
+  color: #f6f6f5;
+  margin-top: -6px;
+}
+#homecontainer .menu-right .toggle-ttc {
+  width: 50%;
+  float: left;
+}
+#homecontainer .menu-right .fiftycent {
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+
+/* EXTRAS */
+.has-tabs, .bar-footer.has-tabs {
+  bottom: 0;
 }

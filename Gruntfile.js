@@ -112,8 +112,8 @@ module.exports = function(grunt) {
                     beautify: true
                 },
                 files: {
-                    /*'dev/js/<%= pkg.appname %>.min.js': ['dev/js/<%= pkg.appname %>.js']*/
-                    'www/js/output.min.js': ['src/**/*.js']
+                    //'www/js/output.min.js': ['src/**/*.js']
+                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js']
                 }
             },
             build: {
@@ -123,8 +123,8 @@ module.exports = function(grunt) {
                     beautify: false
                 },
                 files: {
-                    //'build/js/<%= pkg.appname %>.min.js': ['build/js/<%= pkg.appname %>.js']
-                    'build/js/output.min.js': ['src/input.js']
+                    //'www/js/output.min.js': ['src/**/*.js']
+                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js']
                 }
             }
         },
@@ -169,14 +169,14 @@ module.exports = function(grunt) {
         copy: {
             dev : {
                 files: [
-                     {expand: true, src: ['src/**/*.html'], flatten: true, dest: 'www/'}/*,
-                     {expand: true, src: ['libs'], dest: 'dev/'}*/
+                     {expand: true, src: ['src/*.html'], flatten: true, dest: 'www/'},
+                     {expand: true, src: ['src/templates/*.html'], flatten: true, dest: 'www/templates/'}
                 ]
             },
             build: {
                 files: [
-                     {expand: true, src: ['src/**/*.html'], flatten: true, dest: 'build/'}/*,
-                     {expand: true, src: ['libs'], dest: 'build/'}*/
+                     {expand: true, src: ['src/*.html'], flatten: true, dest: 'www/'},
+                     {expand: true, src: ['src/templates/*.html'], flatten: true, dest: 'www/templates/'}
                 ]
             }
         },

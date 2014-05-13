@@ -23,6 +23,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 $black: #000;
 $white: #FFF;
+$greyfont: #F6F6F5;
 $greenone: #D1FB8B;
 $greentwo: #019159;
 $greenthree: #488F2B;
@@ -68,12 +69,66 @@ $height: 100%;
 
 #homecontainer .menu {
 	background: $black;
-	color: $white;
+	padding-top: 10px;
+
+	h4, i, span {
+		color: $greyfont;
+	}
+	h4 {
+		float: left;
+		margin-left: 10px;
+	}
+	i {
+		float: right;
+		margin-right: 15px;
+    	margin-top: 7px;
+	}
+	.list {
+		margin-top: 30%;
+	}
+
+	.item-stacked-label {
+		border: none;
+	}
+
+	.ion-ios7-close-outline {
+		font-size: 30px;
+		font-weight: bold;
+	}
 }
 
-/* LEFT SIDE */
+#homecontainer .menu-right {
+	h4 {
+		float: right;
+		margin-right: 10px;
+	}
+	i {
+		float: left;
+		margin-left: 15px;
+	}
+	.input-toggle-ttc {
+		width: 50%;
+		float: left;
+	}
+	.item-toggle {
+		background: transparent;
+		border: none;
+		color: $greyfont;
+		margin-top: -6px;
+	}
+	.toggle-ttc {
+		width: 50%;
+		float: left;
+	}
+	.fiftycent {
+		width: 50%;
+		float: left;
+		text-align: center;
+	}
+}
 
-ion-side-menu .ion-ios7-close-outline {
-	font-size: 30px;
-	font-weight: bold;
+/* EXTRAS */
+
+.has-tabs, .bar-footer.has-tabs {
+	bottom: 0;
 }
