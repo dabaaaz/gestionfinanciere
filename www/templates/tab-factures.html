@@ -1,10 +1,31 @@
 <ion-view>
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-avatar" ng-repeat="facture in factures" type="item-text-wrap" href="#/tab/facture/{{facture.id}}">
-        <h2>{{facture.name}}</h2>
-        <p>Cum sociis natoque penatibus et magnis dis parturient. Tityre, tu patulae recubans sub tegmine fagi  dolor.</p>
-      </ion-item>
-    </ion-list>
+  <ion-content id="tab-factures">
+  	<div id="headtab" class="row">
+	  	<i side="left" ng-click="goto('tab.dash')" class="col-10 icon ion-ios7-close-outline"></i>
+	    <h4 class="col-75">Liste des factures</h4>
+	    <button class="col-10 button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = false; data.showReorder = !data.showReorder"></button>
+	</div>
+
+	<ion-list show-reorder="data.showReorder">
+		<ion-item class="item-avatar" type="item-text-wrap">
+			<div class="row">
+			  <div class="col col-50"><h2>Client</h2></div>
+			  <div class="col">HT</div>
+			  <div class="col">T.V.A.</div>
+			  <div class="col">Charges</div>
+			</div>
+		</ion-item>
+		<ion-item class="item-avatar" ng-repeat="facture in factures" type="item-text-wrap" href="#/tab/facture/{{facture.id}}">
+			<ion-option-button class="button-assertive" ng-click="edit(facture)">Edit</ion-option-button>
+			<ion-option-button class="button-balanced" ng-click="valid(facture)">Valider</ion-option-button>
+        	<div class="row">
+			  <div class="col col-50"><h2>{{facture.name}}</h2></div>
+			  <div class="col">{{facture.totalFacture}}</div>
+			  <div class="col">{{facture.tva}}</div>
+			  <div class="col">{{facture.charges}}</div>
+			</div>
+			<ion-reorder-button class="ion-minus-circled" ng-click="onItemDelete(facture)"></ion-reorder>
+		</ion-item>
+	</ion-list>
   </ion-content>
 </ion-view>

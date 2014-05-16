@@ -1,13 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('ContentController', ['$scope',function($scope, $ionicSideMenuDelegate){
+.controller('ContentController', function($scope, $ionicSideMenuDelegate){
 
 	// Sliding the left menu
 	$scope.toggleLeft = function() {
 		$ionicSideMenuDelegate.toggleLeft();
 	};
 
-}])
+})
 
 .controller('DashCtrl', function($scope, $state) {
 	$scope.goto = function(stateName) {
@@ -15,14 +15,43 @@ angular.module('starter.controllers', [])
   	};
 })
 
-.controller('FacturesCtrl', function($scope, Factures) {
+.controller('FacturesCtrl', function($scope, Factures, $state) {
   $scope.factures = Factures.all();
+  $scope.goto = function(stateName) {
+  	$state.go(stateName);
+  };
+  $scope.data = {
+    showDelete: false
+  };
+  // Éditer une facture
+  $scope.edit = function(facture) {
+    $state.go("tab.facture-edit", {factureId:facture.id});
+  };
+  // Valider une facture
+  $scope.valid = function(facture) {
+  	alert('Facture validée !');
+  };
+  // Supprimer une facture
+  $scope.onItemDelete = function(facture) {
+    $scope.factures.splice($scope.factures.indexOf(facture), 1);
+  };
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
+.controller('FactureDetailCtrl', function($scope, $stateParams, Factures, $ionicNavBarDelegate) {
+  $scope.facture = Factures.get($stateParams.factureId);
+  $scope.goBack = function() {
+    $ionicNavBarDelegate.back();
+  };
 })
 
+.controller('FactureEditCtrl', function($scope, $stateParams, Factures, $ionicNavBarDelegate) {
+  $scope.facture = Factures.get($stateParams.factureId);
+  $scope.goBack = function() {
+    $ionicNavBarDelegate.back();
+  };
+})
+
+// Cache la tab bar
 .controller('HideCtrl', function($scope) {
   // Nav hide like http://codepen.io/anon/pen/BcyJw
   console.log('HideCtrl');

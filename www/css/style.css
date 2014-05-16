@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -3291,6 +3292,9 @@ body.grade-c {
   line-height: 16px;
   font-size: 16px;
 }
+.scroll-refresher .ionic-refresher-content.ionic-refresher-with-text {
+  bottom: 10px;
+}
 .scroll-refresher .icon-refreshing,
 .scroll-refresher .icon-pulling {
   width: 100%;
@@ -3437,7 +3441,6 @@ ion-infinite-scroll.active .scroll-infinite {
   width: 100%;
   height: 100%;
   background-color: white;
-  overflow: hidden;
 }
 
 /**
@@ -4434,7 +4437,9 @@ a.subdued:last-child {
 }
 
 .tabs-icon-top > .tabs .tab-item,
-.tabs-icon-bottom > .tabs .tab-item {
+.tabs-icon-top.tabs .tab-item,
+.tabs-icon-bottom > .tabs .tab-item,
+.tabs-icon-bottom.tabs .tab-item {
   font-size: 12px;
   line-height: 14px;
 }
@@ -4446,30 +4451,39 @@ a.subdued:last-child {
   font-size: 32px;
 }
 
+.tabs-icon-left.tabs .tab-item,
 .tabs-icon-left > .tabs .tab-item,
+.tabs-icon-right.tabs .tab-item,
 .tabs-icon-right > .tabs .tab-item {
   font-size: 12px;
 }
+.tabs-icon-left.tabs .tab-item .icon,
 .tabs-icon-left > .tabs .tab-item .icon,
+.tabs-icon-right.tabs .tab-item .icon,
 .tabs-icon-right > .tabs .tab-item .icon {
   display: inline-block;
   vertical-align: top;
 }
+.tabs-icon-left.tabs .tab-item .icon:before,
 .tabs-icon-left > .tabs .tab-item .icon:before,
+.tabs-icon-right.tabs .tab-item .icon:before,
 .tabs-icon-right > .tabs .tab-item .icon:before {
   font-size: 24px;
   line-height: 49px;
 }
 
-.tabs-icon-left .tab-item .icon {
+.tabs-icon-left > .tabs .tab-item .icon,
+.tabs-icon-left.tabs .tab-item .icon {
   padding-right: 3px;
 }
 
-.tabs-icon-right .tab-item .icon {
+.tabs-icon-right > .tabs .tab-item .icon,
+.tabs-icon-right.tabs .tab-item .icon {
   padding-left: 3px;
 }
 
-.tabs-icon-only .icon {
+.tabs-icon-only > .tabs .icon,
+.tabs-icon-only.tabs .icon {
   line-height: inherit;
 }
 
@@ -4555,7 +4569,7 @@ a.subdued:last-child {
   min-height: 100%;
   max-height: 100%;
   width: 275px;
-  background-color: #fff;
+  background-color: white;
 }
 
 .menu-content {
@@ -6398,11 +6412,17 @@ input:checked + .checkbox-icon:after {
   background-color: white;
 }
 
-.item-toggle {
-  padding-right: 99px;
-}
 .item-toggle.active {
   box-shadow: none;
+}
+
+.item-toggle,
+.item-toggle.item-complex .item-content {
+  padding-right: 99px;
+}
+
+.item-toggle.item-complex {
+  padding-right: 0;
 }
 
 .item-toggle .toggle {
@@ -8505,16 +8525,12 @@ a.button {
   visibility: hidden;
 }
 
-.keyboard-open .bar-footer,
-.keyboard-open .tabs,
-.footer-hide .bar-footer,
-.footer-hide .tabs {
+.keyboard-open .hide-on-keyboard-open {
   display: none;
 }
-.keyboard-open .has-footer,
-.keyboard-open .has-tabs,
-.footer-hide .has-footer,
-.footer-hide .has-tabs {
+
+.keyboard-open .tabs.hide-on-keyboard-open + .pane .has-tabs,
+.keyboard-open .bar-footer.hide-on-keyboard-open + .pane .has-footer {
   bottom: 0;
 }
 
@@ -8729,7 +8745,7 @@ a.button {
 /**
  * Platform
  * --------------------------------------------------
- * Platform specific tweaks when in Cordova.
+ * Platform specific tweaks
  */
 .platform-ios7.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
   height: 64px;
@@ -8761,7 +8777,30 @@ a.button {
   margin-bottom: 20px;
 }
 
+@media (orientation: landscape) {
+  .platform-ios7.platform-browser.platform-ipad {
+    position: fixed;
+  }
+}
+.platform-android2:not(.enable-transitions) * {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
 /* HOME GLOBAL */
+.fade-bar {
+  height: 20px;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  opacity: 0.75;
+  background-color: #000;
+}
+
+.pane, .view {
+  height: 100.21%;
+}
+
 #homecontainer p, #homecontainer h3, #homecontainer h4, #homecontainer h5 {
   color: white;
 }
@@ -8807,19 +8846,21 @@ a.button {
 #homecontainer .menu h4 {
   float: left;
   margin-left: 10px;
+  margin-top: 25px;
 }
 #homecontainer .menu i {
-  float: right;
-  margin-right: 15px;
-  margin-top: 7px;
-}
-#homecontainer .menu .list {
-  margin-top: 30%;
+  margin-top: 22px;
+  margin-left: 48%;
 }
 #homecontainer .menu .item-stacked-label {
   border: none;
 }
-#homecontainer .menu .ion-ios7-close-outline {
+#homecontainer .menu input {
+  width: 98%;
+  text-align: center;
+}
+
+.ion-ios7-close-outline {
   font-size: 30px;
   font-weight: bold;
 }
@@ -8829,7 +8870,6 @@ a.button {
   margin-right: 10px;
 }
 #homecontainer .menu-right i {
-  float: left;
   margin-left: 15px;
 }
 #homecontainer .menu-right .input-toggle-ttc {
@@ -8851,8 +8891,152 @@ a.button {
   float: left;
   text-align: center;
 }
+#homecontainer .menu-right button {
+  border-color: white;
+  background-color: white;
+  color: black;
+  width: 98%;
+  margin: 0 auto;
+  top: 16px;
+}
 
 /* EXTRAS */
 .has-tabs, .bar-footer.has-tabs {
   bottom: 0;
+}
+
+/* TAB FACTURES */
+#tab-factures {
+  background: black;
+}
+#tab-factures #headtab {
+  margin-top: 15px;
+}
+#tab-factures #headtab h4, #tab-factures #headtab i, #tab-factures #headtab button {
+  color: #f6f6f5;
+}
+#tab-factures #headtab h4, #tab-factures #headtab i {
+  float: left;
+}
+#tab-factures #headtab i {
+  margin-top: 6px;
+  margin-left: 10px;
+}
+#tab-factures #headtab h4 {
+  text-align: center;
+  /*margin-left: -10px;*/
+}
+#tab-factures .ion-ios7-minus-outline {
+  margin-left: -4px;
+}
+#tab-factures .button-icon {
+  padding: 0 4px;
+}
+#tab-factures .button-icon .icon:before, #tab-factures .button-icon.icon:before {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: -3px;
+}
+#tab-factures .item-reorder .button.icon {
+  color: #ef4e3a;
+}
+#tab-factures .item-avatar {
+  border: none;
+  background: black;
+}
+#tab-factures .item-avatar h2, #tab-factures .item-avatar .col {
+  color: #f6f6f5;
+}
+#tab-factures .item-avatar a {
+  background: black;
+  padding-left: 15px;
+}
+#tab-factures .item-avatar .item-options {
+  top: 23%;
+  height: 67%;
+}
+#tab-factures .item-avatar:nth-child(1) {
+  padding-left: 15px;
+  background: black;
+}
+#tab-factures .item-avatar:nth-child(1) .row:nth-child(1) .col:nth-child(1) {
+  margin-right: -15px;
+}
+#tab-factures .item-avatar:nth-child(1) .row:nth-child(1) .col:nth-child(2) {
+  margin-right: -30px;
+}
+#tab-factures .item-avatar:nth-child(1) .row:nth-child(1) .col:nth-child(3) {
+  margin-right: -30px;
+}
+
+/* PAGE FACTURE EN DÉTAILS */
+#page-facture {
+  background: black;
+}
+#page-facture ion-nav-bar {
+  background: black;
+  border: none;
+}
+#page-facture ion-nav-bar ion-nav-back-button {
+  color: #f6f6f5;
+}
+#page-facture ion-nav-bar h1 {
+  color: #f6f6f5;
+}
+#page-facture ion-nav-bar #back, #page-facture ion-nav-bar #edit {
+  background: black;
+  border: none;
+  color: #f6f6f5;
+  margin-top: -5px;
+  font-size: 30px;
+}
+#page-facture ion-nav-bar .title:nth-child(2) {
+  margin-top: 25px;
+  font-size: 97%;
+}
+#page-facture ion-item {
+  background: black;
+  color: #f6f6f5;
+  border: none;
+  padding-left: 0;
+}
+#page-facture .col {
+  text-align: center;
+  font-size: 90%;
+}
+#page-facture input {
+  margin: 0 auto;
+  text-align: center;
+}
+#page-facture input {
+  text-align: left;
+}
+#page-facture button {
+  border-color: white;
+  background-color: white;
+  color: black;
+}
+#page-facture .item-checkbox {
+  padding-left: 0px;
+  border: none;
+  background: black;
+}
+#page-facture .item-checkbox .checkbox {
+  top: 20px;
+}
+#page-facture .item-checkbox .checkbox-icon {
+  margin: 0 auto;
+}
+#page-facture .item-checkbox .checkbox-icon:before {
+  border-color: #018f2a;
+}
+#page-facture .item-checkbox .checkbox input:checked + .checkbox-icon:before {
+  background: #019159;
+}
+#page-facture input[type="date"] {
+  text-align: left;
+  /*padding-top: 10px;*/
+}
+#page-facture .item-avatar, #page-facture .item-avatar .item-content, #page-facture .item-avatar-left, #page-facture .item-avatar-left .item-content {
+  min-height: 30px;
 }
