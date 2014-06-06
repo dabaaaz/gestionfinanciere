@@ -4,6 +4,20 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
+        /* MISE À JOUR DES PACKAGES CONTENUS DANS PACKAGE.JSON */
+        devUpdate: {
+            options: {
+                updateType: 'report', //just report outdated packages
+                reportUpdated: false, //don't report already updated packages
+                semver: true, //use package.json semver rules when updating
+                packages: { //what packages to check
+                    devDependencies: true, //only devDependencies
+                    dependencies: false
+                },
+                packageJson: null //find package.json automatically
+            }
+        },
+
 		/* AUTOMATISATION */
 		watch: {
     		//all: {
@@ -233,7 +247,7 @@ module.exports = function(grunt) {
 
 	});
 
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('default', ['devUpdate', 'watch']);
     grunt.registerTask('dev', [/*'watch',*/ 'sass', 'jshint', /*'csslint',*/ /*'concat',*/ 'autoprefixer', 'uglify', 'imagemin']);
     grunt.registerTask('build', ['sass', /*'concat', */'autoprefixer', 'uglify', 'imagemin', 'compress','ftp-deploy']);
     grunt.registerTask('clean', ['clean']);

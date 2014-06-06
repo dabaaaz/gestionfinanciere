@@ -1,26 +1,80 @@
 angular.module('starter.services', [])
 
-/**
- * A simple example service that returns some data.
- */
 .factory('Factures', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var factures = [
-    { id: 0, name: 'Scruff McGruff', totalFacture: 1600, tva: 20, charges: 30, payee: 0, date: 1400151149},
-    { id: 1, name: 'G.I. Joe', totalFacture: 2200, tva: 20, charges: 30, payee: 1, date: 1400161149},
-    { id: 2, name: 'Miss Frizzle', totalFacture: 4200, tva: 20, charges: 30, payee: 0, date: 1400160149},
-    { id: 3, name: 'Ash Ketchum', totalFacture: 200, tva: 20, charges: 30, payee: 1, date: 1400161049}
-  ];
-
   return {
     all: function() {
-      return factures;
+      var factureString = window.localStorage.factures;
+      if(factureString) {
+        console.log(angular.fromJson(factureString));
+        return angular.fromJson(factureString);
+      }
+      return [];
+    },
+    save: function(factures) {
+      window.localStorage.factures = angular.toJson(factures);
+    },
+    newFacture: function(id, name, totalFacture, tva, charges, payee, date) {
+      // Add a new facture
+      return {
+        id: id,
+        name: name,
+        totalFacture: totalFacture,
+        tva: tva,
+        charges: charges,
+        payee: payee,
+        date: date
+      };
     },
     get: function(factureId) {
-      // Simple index lookup
-      return factures[factureId];
+      // We take the array of factures
+      var factures = this.all();
+      for (var key in factures) {
+          var facture = factures[key];
+          if(facture.id == factureId) {
+            return facture;
+          }
+      }
+    },
+    getLastActiveIndex: function() {
+      return parseInt(window.localStorage.lastActiveFactures) || 0;
+    },
+    setLastActiveIndex: function(index) {
+      window.localStorage.lastActiveFactures = index;
+    },
+    editIndex: function(newFacture) {
+      // We take the array of factures
+      var factures = this.all();
+
+      // We update the item
+      for (var key in factures) {
+          var facture = factures[key];
+          if(facture.id == newFacture.id) {
+            factures[key] = newFacture;
+            break;
+          }
+      }
+
+      // We save the array of factures
+      this.save(factures);
+    },
+    removeIndex: function(index) {
+      // We take the array of factures
+      var factures = this.all();
+
+      // We remove the item
+      for (var key in factures) {
+          var facture = factures[key];
+          if(facture.id == index) {
+            factures.splice(key, 1);
+            break;
+          }
+      }
+
+      // We save the array of factures
+      this.save(factures);
+    },
+    clearAll: function() {
+      window.localStorage.clear();
     }
   };
-}) ;
+});

@@ -17,12 +17,14 @@
 		</ion-item>
 		<ion-item class="item-avatar" ng-repeat="facture in factures" type="item-text-wrap" href="#/tab/facture/{{facture.id}}">
 			<ion-option-button class="button-assertive" ng-click="edit(facture)">Edit</ion-option-button>
-			<ion-option-button class="button-balanced" ng-click="valid(facture)">Valider</ion-option-button>
+			<ion-option-button class="button-balanced" ng-click="valid(facture)" ng-if="!facture.payee">Valider</ion-option-button>
         	<div class="row">
 			  <div class="col col-50"><h2>{{facture.name}}</h2></div>
-			  <div class="col">{{facture.totalFacture}}</div>
-			  <div class="col">{{facture.tva}}</div>
-			  <div class="col"><strong>{{facture.charges}}</strong></div>
+			  <!--<div class="col">{{(facture.totalFacture * 100/(facture.tva + 100) * 100/(facture.charges + 100)).toFixed(2)}}</div>-->
+			  <div class="col">{{(facture.totalFacture * (100/(facture.tva + 100))).toFixed(2)}}</div>
+			  <div class="col">{{facture.tva}}%</div>
+			  <!--<div class="col">{{facture.charges}}%</div>-->
+			  <div class="col">{{(facture.totalFacture * 100/(facture.tva + 100) * facture.charges / 100).toFixed(2)}}</div>
 			</div>
 			<ion-reorder-button class="ion-minus-circled" ng-click="onItemDelete(facture)"></ion-reorder>
 		</ion-item>

@@ -20,6 +20,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })*/
 
+/*.run(function($localstorage) {
+  $localstorage.set('name', 'Max');
+  console.log($localstorage.get('name'));
+  $localstorage.setObject('post', {
+    name: 'Thoughts',
+    text: 'Today was a good day'
+  });
+  
+  var post = $localstorage.getObject('post');
+  console.log(post);
+})*/
+
 // The fadeBar directive
 .directive('fadeBar', function($timeout) {
   return {
@@ -35,6 +47,71 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           $element[0].style.opacity = Math.abs(ratio);
         });
       });
+    }
+  };
+})
+
+.directive('onValidSubmit', ['$parse', '$timeout', function($parse, $timeout) {
+  return {
+    require: '^form',
+    restrict: 'A',
+    link: function(scope, element, attrs, form) {
+      form.$submitted = false;
+      var fn = $parse(attrs.onValidSubmit);
+      element.on('submit', function(event) {
+        scope.$apply(function() {
+          element.addClass('ng-submitted');
+          form.$submitted = true;
+          if (form.$valid) {
+            if (typeof fn === 'function') {
+              fn(scope, {$event: event});
+            }
+          }
+        });
+      });
+    }
+  };
+}])
+
+.directive('validated', ['$parse', function($parse) {
+  return {
+    require: '^form',
+    restrict: 'AEC',
+    link: function(scope, element, attrs, form) {
+      var inputs = element.find("*");
+      var processInput = function(input){
+        var attributes = input.attributes;
+        if (attributes.getNamedItem('ng-model') != void 0 && attributes.getNamedItem('name') != void 0) {
+          var field = form[attributes.name.value];
+          if (field != void 0) {
+            scope.$watch(function() {
+              return form.$submitted + "_" + field.$valid;
+            }, function() {
+              if (form.$submitted !== true) return;
+              var inp = angular.element(input);
+              if (inp.hasClass('ng-invalid')) {
+                element.removeClass('has-success');
+                element.addClass('has-error');
+              } else {
+                element.removeClass('has-error').addClass('has-success');
+              }
+            });
+          }
+        }
+      };
+      for(var i = 0; i < inputs.length; i++) {
+        processInput(inputs[i]);
+      }
+    }
+  };
+}])
+
+.directive("initFromForm", function ($parse) {
+  return {
+    link: function (scope, element, attrs) {
+      var attr = attrs.initFromForm || attrs.ngModel || element.attrs('name'),
+      val = attrs.value;
+      $parse(attr).assign(scope, val);
     }
   };
 })

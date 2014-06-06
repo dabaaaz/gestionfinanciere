@@ -3,28 +3,28 @@
     <ion-side-menus>
       <fade-bar></fade-bar>
       <!-- Center content -->
-      <ion-side-menu-content ng-controller="ContentController">
+      <ion-side-menu-content>
         
           <div class="row">
             <div id="colone" ng-click="goto('tab.factures')" class="col-50">
               <p>Environ</p>
-              <h3>1200 €</h3>
+              <h3>{{(chiffresThatMonth.average).toFixed(2)}}€</h3>
               <p>net par mois</p>
             </div>
             <div id="coltwo" ng-click="goto('tab.factures-ca')" class="col-50">
               <p>CA de<p>
-              <h4>33400 €</h4>
+              <h4>{{(chiffresThatMonth.ca).toFixed(2)}}€</h4>
             </div>
           </div>
           <div class="row">
             <div id="colthree" ng-click="goto('tab.factures-tva')" class="col-50">
               <p>Total de</p>
-              <h5>11700€</h5>
+              <h5>{{(chiffresThatMonth.tva).toFixed(2)}}€</h5>
               <p>de T.V.A.</p>
             </div>
             <div id="colfour" ng-click="goto('tab.factures-charges')" class="col-50">
               <p>Total de</p>
-              <h5>15000€</h5>
+              <h5>{{(chiffresThatMonth.charges).toFixed(2)}}€</h5>
               <p>de charges</p>
             </div>
           </div>
@@ -54,33 +54,43 @@
         <i menu-close class="icon ion-ios7-close-outline"></i>
         <h4>Ajouter facture</h4>
 
-        <ion-list>
-          <ion-item class="item item-input item-stacked-label">
-            <span class="input-label">Nom du client</span>
-            <input type="text" value="ONZEDIX">
-          </ion-item>
-          <ion-item class="item item-input item-stacked-label">
-            <span class="input-label">Total HT</span><br />
-            <input class="input-toggle-ttc" type="text" value="1200">
-            <ion-toggle class="toggle-ttc" ng-model="airplaneMode" toggle-class="toggle-calm">TTC ?</ion-toggle>
-          </ion-item>
-          <ion-item class="item item-input item-stacked-label">
-            <span class="input-label">Date d'envoi</span>
-            <input type="text" placeholder="14 Juillet 2014">
-          </ion-item>
-          <ion-item class="fiftycent item item-input item-stacked-label">
-            <span class="input-label">Charges</span>
-            <input type="text" placeholder="30">
-          </ion-item>
-          <ion-item class="fiftycent item item-input item-stacked-label">
-            <span class="input-label">T.V.A.</span>
-            <input type="text" placeholder="20">
-          </ion-item>
-          <ion-item class="item item-input item-stacked-label">
-            <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Facture validée ?</ion-toggle>
-          </ion-item>
-          <button class="button button-block button-positive">Enregistrer</button>
-        </ion-list>
+        <form id="ajoutfacture" novalidate="novalidate" on-valid-submit="newFacture(facture)">
+          <ion-list>
+            <label class="item item-input item-stacked-label validated">
+              <span class="input-label">Nom du client</span>
+              <input required="required" type="text" value="ONZEDIX" name="name" ng-model="facture.name">
+              <i class="icon ion-alert-circled error"></i>
+            </label>
+            <label class="item item-input item-stacked-label validated">
+              <span class="input-label">Total HT</span><br />
+              <input required="required" class="input-toggle-ttc" type="number" value="1200" name="totalFacture" ng-model="facture.totalFacture">              
+              <ion-toggle class="toggle-ttc" ng-model="facture.ttc" toggle-class="toggle-calm">TTC ?</ion-toggle>
+              <i class="icon ion-alert-circled error"></i>
+            </label>
+            <label class="item item-input item-stacked-label validated">
+              <span class="input-label">Date d'envoi</span>
+              <input required="required" type="date" placeholder="14 Juillet 2014" name="date" ng-model="facture.date">
+              <i class="icon ion-alert-circled error"></i>
+            </label>
+            <label class="fiftycent item item-input item-stacked-label validated">
+              <span class="input-label">Charges</span>
+              <input required="required" type="number" placeholder="30" name="charges" ng-model="facture.charges">
+              <i class="icon ion-alert-circled error"></i>
+            </label>
+            <label class="fiftycent item item-input item-stacked-label validated">
+              <span class="input-label">T.V.A.</span>
+              <input required="required" type="number" placeholder="20" name="tva" ng-model="facture.tva">
+              <i class="icon ion-alert-circled error"></i>
+            </label>
+            <label class="item item-input item-stacked-label validated">
+              <ion-toggle name="validation" ng-model="facture.validation" toggle-class="toggle-calm">Facture validée ?</ion-toggle>
+            </label>
+          </ion-list>
+          <div class="padding">
+            <button type="submit" class="button button-block button-positive">Ajouter facture</button>
+          </div>
+        </form>
+
       </ion-side-menu>
     </ion-side-menus>
   </ion-content>

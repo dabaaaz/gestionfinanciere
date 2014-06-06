@@ -94,8 +94,10 @@ $reddelete : #EF4E3A;
 		margin-top: 25px;
 	}
 	i {
-    	margin-top: 22px;
     	margin-left: 48%;
+	}
+	.ion-ios7-close-outline::before {
+		margin-top: 22px;
 	}
 	.item-stacked-label {
 		border: none;
@@ -144,14 +146,50 @@ $reddelete : #EF4E3A;
 		color: $black;
 		width: 98%;
 		margin: 0 auto;
-		top: 16px;
 	}
+
 }
 
 /* EXTRAS */
 
 .has-tabs, .bar-footer.has-tabs {
 	bottom: 0;
+}
+
+/* FORM VALIDATION */
+
+form i.icon.error {
+  color: #ef4e3a;
+}
+
+form input + i.icon.error {
+  display: none;
+  margin-left: 8px;
+}
+
+form.ng-submitted input.ng-invalid + i.icon.error {
+  display: block;
+  right: 12px;
+  margin-top: -32px;
+  position: absolute;
+}
+
+/* Get the one after the toggle */
+form.ng-submitted input.ng-invalid + div.toggle-ttc + i.icon.error {
+  margin-left: -154px;
+  margin-top: 2px;
+}
+
+form .has-error input {
+  border-left: 5px solid #cc2511;
+}
+
+form .has-success input {
+  border-left: 5px solid #3d8b3d;
+}
+
+form.ng-submitted input.ng-valid + i.icon.error {
+  display: none;
 }
 
 /* TAB FACTURES */
@@ -187,7 +225,7 @@ $reddelete : #EF4E3A;
 	.button-icon .icon:before, .button-icon.icon:before {
 		font-size: 30px;
 		font-weight: bold;
-		margin-top: -3px;
+		margin-top: -1px;
 	}
 	.item-reorder .button.icon {
 		color: $reddelete;
@@ -197,6 +235,14 @@ $reddelete : #EF4E3A;
 		background: $black;
 		h2, .col {
 			color: $greyfont;
+		}
+		.col {
+			margin-left: -10px;
+		}
+		&.item-complex {
+			.col {
+				font-size: 90%;
+			}
 		}
 		a {
 			background: $black;
@@ -221,7 +267,13 @@ $reddelete : #EF4E3A;
 			.col:nth-child(3) {
 				margin-right: $mr*2;
 			}
+			.col:nth-child(4) {
+				margin-right: $mr*3;
+			}
 		}
+	}
+	.item-complex .col:nth-child(4) {
+		margin-right: $mr*3;
 	}
 }
 
@@ -264,9 +316,9 @@ $reddelete : #EF4E3A;
 		margin: 0 auto;
 		text-align: center;
 	}
-	input {
+	/*input {
 		text-align: left;
-	}
+	}*/
 	button {
 		border-color: $white;
 		background-color: $white;

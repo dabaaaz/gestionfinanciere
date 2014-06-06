@@ -24,7 +24,7 @@
 		</ion-item>
 		<ion-item class="item-avatar" type="item-text-wrap">
         	<div class="row">
-			  <div class="col">9999</div>
+			  <div class="col">{{facture.totalFacture.toFixed(2)}}€</div>
 			  <div class="col">Oui</div>
 			</div>
 		</ion-item>
@@ -37,9 +37,16 @@
 		</ion-item>
 		<ion-item class="item-avatar" type="item-text-wrap">
         	<div class="row">
-			  <div class="col">{{facture.totalFacture}}</div>
-			  <div class="col">{{facture.tva}}</div>
-			  <div class="col">{{facture.charges}}</div>
+			  <!--<div class="col">{{(facture.totalFacture * 100/(facture.tva + 100) * 100/(facture.charges + 100)).toFixed(2)}}</div>-->
+			  <div class="col">{{(facture.totalFacture * (100/(facture.tva + 100))).toFixed(2)}}</div>
+			  <div class="col">{{facture.tva}}%</div>
+			  <div class="col">{{facture.charges}}%</div>
+			</div>
+		</ion-item>
+		<ion-item class="item-avatar" type="item-text-wrap">
+			<div class="row">
+				<div class="col" ng-if="facture.payee">Payée : Oui</div>
+				<div class="col" ng-if="!facture.payee">Payée : Non</div>
 			</div>
 		</ion-item>
 	</ion-list>
