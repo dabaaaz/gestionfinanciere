@@ -40,15 +40,17 @@
       		<div class="col">
       			<label class="fiftycent item-avatar item-input item-stacked-label validated">
 		          <span class="input-label">Charges</span>
-		          <input id="charges" required="required" class="textpercent" type="text" value="{{preferences.charges}}" name="charges" init-from-form ng-model="facture.charges">
+		          <input id="charges" required="required" class="textpercent" type="number" value="{{preferences.charges}}" name="charges" init-from-form ng-model="facture.charges">
 		          <i class="icon ion-alert-circled error"></i>
+		          <span class="showPercent">%</span>
 		        </label>
       		</div>
       		<div class="col">
       			<label class="fiftycent item-avatar item-input item-stacked-label validated">
 		          <span class="input-label">T.V.A.</span>
-		          <input id="tva" required="required" class="textpercent" type="text" value="{{preferences.tva}}" name="tva" init-from-form ng-model="facture.tva">
+		          <input id="tva" required="required" class="textpercent" type="number" value="{{preferences.tva}}" name="tva" init-from-form ng-model="facture.tva">
 		          <i class="icon ion-alert-circled error"></i>
+		          <span class="showPercent">%</span>
 		        </label>
       		</div>
       	</div>

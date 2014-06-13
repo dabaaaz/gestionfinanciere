@@ -40,10 +40,12 @@
           <ion-item class="item item-input item-stacked-label">
             <span class="input-label">Taux de T.V.A. (par défaut)</span>
             <input type="number" class="textpercent" min="0" max="100" ng-model-onblur ng-change="updateTvaAndCharges()" ng-model="preferences.tva">
+            <span class="showPercent">%</span>
           </ion-item>
           <ion-item class="item item-input item-stacked-label">
             <span class="input-label">Taux de charges (par défaut)</span>
             <input type="number" class="textpercent" name="charges" min="0" max="100" ng-model-onblur ng-change="updateTvaAndCharges()" ng-model="preferences.charges">
+            <span class="showPercent">%</span>
           </ion-item>
         </ion-list>
 
@@ -74,13 +76,15 @@
             </label>
             <label class="fiftycent item item-input item-stacked-label validated">
               <span class="input-label">Charges</span>
-              <input id="charges" required="required" class="textpercent" type="text" value="{{preferences.charges}}" name="charges" init-from-form ng-model="facture.charges">
+              <input id="charges" required="required" class="textpercent" type="number" value="{{preferences.charges}}" name="charges" init-from-form ng-model="facture.charges">
               <i class="icon ion-alert-circled error"></i>
+              <span class="showPercent">%</span>
             </label>
             <label class="fiftycent item item-input item-stacked-label validated">
               <span class="input-label">T.V.A.</span>
-              <input id="tva" required="required" class="textpercent" type="text" value="{{preferences.tva}}" name="tva" init-from-form ng-model="facture.tva">
+              <input id="tva" required="required" class="textpercent" type="number" value="{{preferences.tva}}" name="tva" init-from-form ng-model="facture.tva">
               <i class="icon ion-alert-circled error"></i>
+              <span class="showPercent">%</span>
             </label>
             <label class="item item-input item-stacked-label validated">
               <ion-toggle name="validation" ng-model="facture.validation" toggle-class="toggle-calm">Facture validée ?</ion-toggle>

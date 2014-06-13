@@ -8941,6 +8941,14 @@ input[type="number"].textpercent {
   text-align: center !important;
 }
 
+.showPercent {
+  color: black !important;
+  position: absolute;
+  right: 10px;
+  margin-top: -27px;
+  font-size: 14px;
+}
+
 #homecontainer p, #homecontainer h3, #homecontainer h4, #homecontainer h5 {
   color: white;
   font-size: 16px;
@@ -9007,6 +9015,11 @@ input[type="number"].textpercent {
   text-align: center;
 }
 
+/* LOADER "Enregistré" */
+div.loading.visible.active {
+  margin-top: -120px !important;
+}
+
 .ion-ios7-close-outline {
   font-size: 30px;
   font-weight: bold;
@@ -9065,7 +9078,7 @@ form input + i.icon.error {
 form.ng-submitted input.ng-invalid + i.icon.error {
   display: block;
   right: 12px;
-  margin-top: -32px;
+  margin-top: -30px;
   position: absolute;
 }
 
@@ -9187,95 +9200,107 @@ form.ng-submitted input.ng-valid + i.icon.error {
   margin-right: 10px;
 }
 
-/* PAGE FACTURE EN DÉTAILS */
-#page-facture, #page-creer-facture {
+/* PAGE FACTURE EN DÉTAILS, EDITER FACTURE ET AJOUTER FACTURE */
+#page-facture, #page-facture-edit, #page-creer-facture {
   background: black;
   /*input {
   	text-align: left;
   }*/
 }
-#page-facture ion-nav-bar, #page-creer-facture ion-nav-bar {
+#page-facture ion-nav-bar, #page-facture-edit ion-nav-bar, #page-creer-facture ion-nav-bar {
   background: black;
   border: none;
 }
-#page-facture ion-nav-bar ion-nav-back-button, #page-creer-facture ion-nav-bar ion-nav-back-button {
+#page-facture ion-nav-bar ion-nav-back-button, #page-facture-edit ion-nav-bar ion-nav-back-button, #page-creer-facture ion-nav-bar ion-nav-back-button {
   color: #f6f6f5;
 }
-#page-facture ion-nav-bar h1, #page-creer-facture ion-nav-bar h1 {
+#page-facture ion-nav-bar h1, #page-facture-edit ion-nav-bar h1, #page-creer-facture ion-nav-bar h1 {
   color: #f6f6f5;
   font-family: 'Open Sans', sans-serif;
 }
-#page-facture ion-nav-bar #back, #page-facture ion-nav-bar #edit, #page-creer-facture ion-nav-bar #back, #page-creer-facture ion-nav-bar #edit {
+#page-facture ion-nav-bar #back, #page-facture ion-nav-bar #edit, #page-facture-edit ion-nav-bar #back, #page-facture-edit ion-nav-bar #edit, #page-creer-facture ion-nav-bar #back, #page-creer-facture ion-nav-bar #edit {
   background: black;
   border: none;
   color: #f6f6f5;
   margin-top: -5px;
   font-size: 30px;
 }
-#page-facture ion-nav-bar .title:nth-child(2), #page-creer-facture ion-nav-bar .title:nth-child(2) {
+#page-facture ion-nav-bar .title:nth-child(2), #page-facture-edit ion-nav-bar .title:nth-child(2), #page-creer-facture ion-nav-bar .title:nth-child(2) {
   margin-top: 25px;
   font-size: 97%;
 }
-#page-facture ion-item, #page-creer-facture ion-item {
+#page-facture ion-item, #page-facture-edit ion-item, #page-creer-facture ion-item {
   background: black;
   color: #f6f6f5;
   border: none;
   padding-left: 0;
 }
-#page-facture ion-item.with-bottom, #page-creer-facture ion-item.with-bottom {
+#page-facture ion-item.with-bottom, #page-facture-edit ion-item.with-bottom, #page-creer-facture ion-item.with-bottom {
   padding-bottom: 0;
 }
-#page-facture ion-item.with-bottom .row, #page-creer-facture ion-item.with-bottom .row {
+#page-facture ion-item.with-bottom .row, #page-facture-edit ion-item.with-bottom .row, #page-creer-facture ion-item.with-bottom .row {
   padding: 0;
 }
-#page-facture ion-item.with-bottom .row .col, #page-creer-facture ion-item.with-bottom .row .col {
+#page-facture ion-item.with-bottom .row .col, #page-facture-edit ion-item.with-bottom .row .col, #page-creer-facture ion-item.with-bottom .row .col {
   padding-bottom: 0;
 }
-#page-facture ion-item.with-top, #page-creer-facture ion-item.with-top {
+#page-facture ion-item.with-top, #page-facture-edit ion-item.with-top, #page-creer-facture ion-item.with-top {
   padding-top: 0;
 }
-#page-facture ion-item.with-top .row, #page-creer-facture ion-item.with-top .row {
+#page-facture ion-item.with-top .row, #page-facture-edit ion-item.with-top .row, #page-creer-facture ion-item.with-top .row {
   padding: 0;
 }
-#page-facture .col, #page-creer-facture .col {
+#page-facture .col, #page-facture-edit .col, #page-creer-facture .col {
   text-align: center;
   font-size: 90%;
 }
-#page-facture input, #page-creer-facture input {
+#page-facture input, #page-facture-edit input, #page-creer-facture input {
   margin: 0 auto;
   text-align: center;
 }
-#page-facture button, #page-creer-facture button {
+#page-facture button, #page-facture-edit button, #page-creer-facture button {
   border-color: white;
   background-color: white;
   color: black;
 }
-#page-facture .item-checkbox, #page-creer-facture .item-checkbox {
+#page-facture .item-checkbox, #page-facture-edit .item-checkbox, #page-creer-facture .item-checkbox {
   padding-left: 0px;
   border: none;
   background: black;
 }
-#page-facture .item-checkbox .checkbox, #page-creer-facture .item-checkbox .checkbox {
+#page-facture .item-checkbox .checkbox, #page-facture-edit .item-checkbox .checkbox, #page-creer-facture .item-checkbox .checkbox {
   top: 20px;
 }
-#page-facture .item-checkbox .checkbox-icon, #page-creer-facture .item-checkbox .checkbox-icon {
+#page-facture .item-checkbox .checkbox-icon, #page-facture-edit .item-checkbox .checkbox-icon, #page-creer-facture .item-checkbox .checkbox-icon {
   margin: 0 auto;
 }
-#page-facture .item-checkbox .checkbox-icon:before, #page-creer-facture .item-checkbox .checkbox-icon:before {
+#page-facture .item-checkbox .checkbox-icon:before, #page-facture-edit .item-checkbox .checkbox-icon:before, #page-creer-facture .item-checkbox .checkbox-icon:before {
   border-color: #018f2a;
 }
-#page-facture .item-checkbox .checkbox input:checked + .checkbox-icon:before, #page-creer-facture .item-checkbox .checkbox input:checked + .checkbox-icon:before {
+#page-facture .item-checkbox .checkbox input:checked + .checkbox-icon:before, #page-facture-edit .item-checkbox .checkbox input:checked + .checkbox-icon:before, #page-creer-facture .item-checkbox .checkbox input:checked + .checkbox-icon:before {
   background: #019159;
 }
-#page-facture input[type="date"], #page-creer-facture input[type="date"] {
+#page-facture input[type="date"], #page-facture-edit input[type="date"], #page-creer-facture input[type="date"] {
   text-align: left;
   /*padding-top: 10px;*/
 }
-#page-facture .item-avatar, #page-facture .item-avatar .item-content, #page-facture .item-avatar-left, #page-facture .item-avatar-left .item-content, #page-creer-facture .item-avatar, #page-creer-facture .item-avatar .item-content, #page-creer-facture .item-avatar-left, #page-creer-facture .item-avatar-left .item-content {
+#page-facture .item-avatar, #page-facture .item-avatar .item-content, #page-facture .item-avatar-left, #page-facture .item-avatar-left .item-content, #page-facture-edit .item-avatar, #page-facture-edit .item-avatar .item-content, #page-facture-edit .item-avatar-left, #page-facture-edit .item-avatar-left .item-content, #page-creer-facture .item-avatar, #page-creer-facture .item-avatar .item-content, #page-creer-facture .item-avatar-left, #page-creer-facture .item-avatar-left .item-content {
   min-height: 30px;
 }
 
-/* PAGE AJOUTER FACTURE */
+/* PAGE EDITER FACTURE SURCOUCHE */
+#page-facture-edit label {
+  padding: 0;
+}
+#page-facture-edit label:last-child {
+  padding-bottom: 4px;
+}
+#page-facture-edit label .showPercent {
+  margin-top: -26px;
+  margin-right: 15px;
+}
+
+/* PAGE AJOUTER FACTURE SURCOUCHE */
 #page-creer-facture form#ajoutfacture .row {
   padding-bottom: 0;
 }
@@ -9286,6 +9311,9 @@ form.ng-submitted input.ng-valid + i.icon.error {
 #page-creer-facture form#ajoutfacture .row .col .item-avatar {
   padding-left: 0;
   /*padding-bottom: 0;*/
+}
+#page-creer-facture form#ajoutfacture .row .col .item-avatar .showPercent {
+  margin-right: 15px;
 }
 #page-creer-facture form#ajoutfacture .row .col .item-avatar .input-label {
   width: 100%;

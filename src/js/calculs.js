@@ -19,7 +19,8 @@ angular.module('starter.calculs', [])
 			if(monthFacture<10) {
 			  monthFacture='0'+monthFacture;
 			}
-			if(yearFacture == yyyy) {
+
+			if(yearFacture == yyyy && facture.payee) {
 			  var tvaCourante = 0, chargesCourantes = 0, netCourant = 0;
 
 			  // TTC

@@ -99,11 +99,13 @@ angular.module('starter.controllers', [])
   // this by using $timeout so everything is initialized
   // properly
   $timeout(function() {
-    if($scope.factures.length === 0) {
+    console.log(settings.homeTuto);
+    if($scope.factures.length === 0 && settings.homeTuto === 0) {
       var alertPopup = $ionicPopup.alert({
         title: 'Ajouter une facture',
         template: 'Un petit slide sur la droite vous permettra d\'ajouter une facture'
       });
+      Settings.updateSettings(settings.modalAddFacture, 1);
     }
   });
 

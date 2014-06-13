@@ -64,6 +64,14 @@ input[type="number"] {
 	}
 }
 
+.showPercent {
+	color: black !important;
+	position: absolute;
+	right: 10px;
+	margin-top: -27px;
+	font-size: 14px;
+}
+
 #homecontainer {
 	p, h3, h4, h5 {
 		color: $white;
@@ -132,6 +140,11 @@ input[type="number"] {
 	}
 }
 
+/* LOADER "Enregistré" */
+div.loading.visible.active {
+	margin-top: -120px !important;
+}
+
 .ion-ios7-close-outline {
 	font-size: 30px;
 	font-weight: bold;
@@ -195,7 +208,7 @@ form input + i.icon.error {
 form.ng-submitted input.ng-invalid + i.icon.error {
   display: block;
   right: 12px;
-  margin-top: -32px;
+  margin-top: -30px;
   position: absolute;
 }
 
@@ -326,9 +339,9 @@ form.ng-submitted input.ng-valid + i.icon.error {
 	}
 }
 
-/* PAGE FACTURE EN DÉTAILS */
+/* PAGE FACTURE EN DÉTAILS, EDITER FACTURE ET AJOUTER FACTURE */
 
-#page-facture, #page-creer-facture {
+#page-facture, #page-facture-edit, #page-creer-facture {
 	background: $black;
 	ion-nav-bar {
 		background: $black;
@@ -415,7 +428,23 @@ form.ng-submitted input.ng-valid + i.icon.error {
 	}
 }
 
-/* PAGE AJOUTER FACTURE */
+/* PAGE EDITER FACTURE SURCOUCHE */
+
+#page-facture-edit {
+	label {
+		padding: 0;
+		&:last-child {
+			padding-bottom: 4px;
+		}
+		.showPercent {
+			margin-top: -26px;
+			margin-right: 15px;
+		}
+	}
+
+}
+
+/* PAGE AJOUTER FACTURE SURCOUCHE */
 
 #page-creer-facture {
 	form#ajoutfacture {
@@ -427,6 +456,9 @@ form.ng-submitted input.ng-valid + i.icon.error {
 				.item-avatar {
 					padding-left: 0;
 					/*padding-bottom: 0;*/
+					.showPercent {
+						margin-right: 15px;
+					}
 					.input-label {
 						width: 100%;
 						float: left;

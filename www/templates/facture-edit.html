@@ -1,11 +1,11 @@
-<ion-view id="page-facture" title="{{facture.name}}">
+<ion-view id="page-facture-edit" title="{{facture.name}}">
   <ion-nav-bar class="nav-title-slide-ios7">
   	<div class="buttons left-buttons">
 		<button id="back" ng-click="goBack()"><i class="ion-chevron-left"></i></button>
 	</div>
   </ion-nav-bar>
   <ion-content has-header="true" padding="true">
-  	<form ng-submit="editFacture(facture)">
+  	<form novalidate="novalidate" on-valid-submit="editFacture(facture)">
 		<ion-list>
 			<ion-item class="item-avatar with-bottom" type="item-text-wrap">
 				<div class="row">
@@ -18,10 +18,29 @@
 			<ion-item class="item-avatar item-stacked-label with-top" type="item-text-wrap">
 	        	<div class="row">
 				  <!--<div class="col"><input id="totalht" type="text" value="{{(facture.totalFacture * 100/(facture.tva + 100) * 100/(facture.charges + 100)).toFixed(2)}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" /></div>-->
-				  <div class="col"><input id="totalht" class="textnumber" type="text" value="{{facture.ht}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" /></div>
-				  <div class="col"><input type="text" class="textpercent" value="{{facture.tva}}" ng-model="facture.tva" ng-model-onblur ng-change="updatettc()" /></div>
-				  <div class="col"><input type="text" class="textpercent" value="{{facture.charges}}" ng-model="facture.charges" /></div>
-				  <div class="col"><input id="totalttc" class="textnumber" type="text" value="{{facture.totalFacture}}" ng-model="facture.totalFacture" init-from-form ng-model-onblur ng-change="updateht()" /></div>
+				  <div class="col">
+				  	<label class="item-avatar item-input item-stacked-label validated">
+					  	<input required="required" id="totalht" class="textnumber" type="number" value="{{facture.ht}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" />
+					  	<i class="icon ion-alert-circled error"></i>
+				  	</label>
+				  </div>
+				  <div class="col">
+				  	<label class="item-avatar item-input item-stacked-label validated">
+				  		<input required="required" type="text" class="textpercent" value="{{facture.tva}}" ng-model="facture.tva" init-from-form ng-model-onblur ng-change="updatettc()" />
+				  		<i class="icon ion-alert-circled error"></i>
+				  		<span class="showPercent">%</span>
+				  	</label>
+				  </div>
+				  <div class="col">
+				  	<label class="item-avatar item-input item-stacked-label validated">
+					  	<input required="required" type="number" class="textpercent" value="{{facture.charges}}" ng-model="facture.charges" init-from-form />
+					  	<i class="icon ion-alert-circled error"></i>
+					  	<span class="showPercent">%</span>
+				  	</label>
+				  </div>
+				  <div class="col">
+				  	<input id="totalttc" class="textnumber" type="number" value="{{facture.totalFacture}}" ng-model="facture.totalFacture" init-from-form ng-model-onblur ng-change="updateht()" />
+				  </div>
 				</div>
 			</ion-item>
 			<ion-item class="item-avatar with-bottom" type="item-text-wrap">
