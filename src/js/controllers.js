@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $timeout, $state, $ionicSideMenuDelegate, Factures, $ionicPopup) {
+.controller('DashCtrl', function($scope, $timeout, $state, $ionicSideMenuDelegate, Factures, Preferences, Settings, Calcul, $ionicPopup, $ionicLoading) {
   // Sliding the left menu
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
@@ -18,67 +18,63 @@ angular.module('starter.controllers', [])
     Factures.save($scope.factures);
     $scope.selectFacture(newFacture, $scope.factures.length-1);
 
-    var alertPopup = $ionicPopup.alert({
-      title: 'Facture ajoutée',
-      template: 'Celle-ci apparaîtra bien dans la liste de vos factures'
-    });
-    alertPopup.then(function(res) {
-     location.reload();
-    });
+    if(!settings.modalAddFacture) {
+      $scope.modalAddFacture = { checked: false };
+      $scope.modalAddFactureChange = function() {
+        // If the "do not show again" is checked we put the modalAddFacture to 1
+        Settings.updateSettings($scope.modalAddFacture.checked, settings.homeTuto);
+      };
+      var alertPopup = $ionicPopup.alert({
+        title: 'Facture ajoutée',
+        scope: $scope,
+        subTitle: 'Celle-ci apparaîtra dans la liste de vos factures',
+        template: '<ion-checkbox ng-model="modalAddFacture.checked" ng-change="modalAddFactureChange()">Ne plus afficher</ion-checkbox>'
+      });
 
+      alertPopup.then(function(res) {
+       location.reload();
+      });
+    } else {
+      location.reload();
+    }
   };
 
-  // Load or initialize factures
+  // Load or initialize factures, settings and preferences
   $scope.factures = allFactures = Factures.all();
-
-  // Get today DD/MM/YYYY
-  var today = new Date();
-  //var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-
-  /*if(dd<10) {
-      dd='0'+dd;
-  } */
-
-  /*if(mm<10) {
-      mm='0'+mm;
-  }*/
-
-  //today = yyyy+'-'+mm+'-'+dd;
-  var charges = 0, tva = 0, ca = 0, tabAverageBenefParMois = [], averageNet = 0, size = 0;
-
-  // Additions pour les totaux de TVA, CA et Charges
-  for (var key in allFactures) {
-    var facture = allFactures[key];
-    var yearFacture = new Date(facture.date).getFullYear();
-    var monthFacture = new Date(facture.date).getMonth()+1;
-    if(monthFacture<10) {
-      monthFacture='0'+monthFacture;
-    }
-    if(yearFacture == yyyy) {
-      tva = tva + facture.tva;
-      charges = charges + facture.charges;
-      ca = ca + parseInt(facture.totalFacture);
-      if(tabAverageBenefParMois[monthFacture] === undefined)
-        tabAverageBenefParMois[monthFacture] = 0;
-      tabAverageBenefParMois[monthFacture] = tabAverageBenefParMois[monthFacture] + parseInt(facture.totalFacture);
-    }
-  }
-
-  // On calcul la moyenne NETTE par mois depuis le mois de Janvier
-  for (var month in tabAverageBenefParMois) {
-    averageNet = averageNet + tabAverageBenefParMois[month];
-    size++;
-  }
-  averageNet = averageNet / size;
+  $scope.preferences = Preferences.all();
+  var settings = Settings.all();
 
   // On envoie le tout dans la vue
-  $scope.chiffresThatMonth = {"charges": charges, "tva": tva, "ca": ca, "average": averageNet};
+  $scope.chiffresThatYear = Calcul.chiffresAnneeEnCours(allFactures);
 
   // Grab the last active, or the first facture
   $scope.activeFacture = $scope.factures[Factures.getLastActiveIndex()];
 
+  // When the TVA or Charges are updating
+  $scope.updateTvaAndCharges = function(){
+    var tva = $scope.preferences.tva;
+    var charges = $scope.preferences.charges;
+    
+    document.getElementById('tva').value = tva;
+    document.getElementById('charges').value = charges;
+
+    Preferences.updateTvaAndCharges(tva, charges);
+
+    // Setup the loader
+    $ionicLoading.show({
+      content: 'Enregistré',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 1000
+    });
+    
+    // Set a timeout to clear loader, however you would actually call the $ionicLoading.hide(); method whenever everything is ready or loaded.
+    $timeout(function () {
+      $ionicLoading.hide();
+    }, 2000);
+
+  };
 
   $scope.newFacture = function(facture) {
     var payee = false, total = 0;
@@ -87,7 +83,7 @@ angular.module('starter.controllers', [])
     if(facture.ttc) {
       total = facture.totalFacture;
     } else {
-      total = facture.totalFacture + (facture.tva/100 * facture.totalFacture);
+      total = Calcul.toTtc(facture.totalFacture, facture.tva);
       //total = facture.totalFacture + facture.totalFacture * facture.charges / 100;
     }
     createFacture(facture.name, total, facture.tva, facture.charges, payee, facture.date);
@@ -99,27 +95,34 @@ angular.module('starter.controllers', [])
     Factures.setLastActiveIndex(index);
   };
 
-
   // Try to create the first facture, make sure to defer
   // this by using $timeout so everything is initialized
   // properly
-  /*$timeout(function() {
+  $timeout(function() {
     if($scope.factures.length === 0) {
-      while(true) {
-        alert('première facture :o');
-        //var factureName = prompt('Your first facture name:');
-        //if(factureName) {
-        //  createProject(projectTitle);
-        //  break;
-        //}
-      }
+      var alertPopup = $ionicPopup.alert({
+        title: 'Ajouter une facture',
+        template: 'Un petit slide sur la droite vous permettra d\'ajouter une facture'
+      });
     }
-  });*/
+  });
 
 })
 
-.controller('FacturesCtrl', function($scope, Factures, $state) {
-  $scope.factures = Factures.all();
+.controller('FacturesCtrl', function($scope, Factures, Calcul, $state) {
+
+  // Get all the factures
+  var allFactures = Factures.all();
+  // Update / add the amounts needed to the view
+  for (var index in allFactures) {
+    var facture = allFactures[index];
+    facture.ht = Calcul.toHt(parseInt(facture.totalFacture), parseInt(facture.tva));
+    facture.ttc = parseInt(facture.totalFacture);
+    facture.tva = Calcul.toTva(facture.totalFacture, facture.tva);
+    facture.charges = Calcul.toCharges(facture.ht, facture.charges);
+  }
+  $scope.factures = allFactures;
+
   $scope.goto = function(stateName) {
   	$state.go(stateName);
   };
@@ -131,61 +134,124 @@ angular.module('starter.controllers', [])
     $state.go("tab.facture-edit", {factureId:facture.id});
   };
   // Valider une facture
-  $scope.valid = function(facture) {
+  /*$scope.valid = function(facture) {
     facture.payee = true;
     Factures.editIndex(facture);
+  };*/
+  $scope.valid = function(factureId, facturePayee) {
+    // Update the date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd='0'+dd;
+    } 
+
+    if(mm<10) {
+        mm='0'+mm;
+    } 
+    today = yyyy+'-'+mm+'-'+dd;
+
+    // We update the payee bool in the view
+    facture.payee = facturePayee;
+
+    // We launch the services
+    Factures.editPayee(factureId, facturePayee, today);
   };
   // Supprimer une facture
   $scope.onItemDelete = function(facture) {
     $scope.factures.splice($scope.factures.indexOf(facture), 1);
     Factures.removeIndex(facture.id);
   };
-
-  $scope.updateHt = function (total, tva) {
-      $scope.updateHt = "okk";
-   };
 })
 
-.controller('FactureDetailCtrl', function($scope, $stateParams, Factures, $ionicNavBarDelegate) {
-  $scope.facture = Factures.get($stateParams.factureId);
+.controller('FactureDetailCtrl', function($scope, $stateParams, Factures, Calcul, $ionicNavBarDelegate) {
+  var facture = Factures.get($stateParams.factureId);
+
+  facture.ht = Calcul.toHt(parseInt(facture.totalFacture), parseInt(facture.tva));
+  facture.tva = Calcul.toTva(facture.totalFacture, facture.tva);
+  facture.charges = Calcul.toCharges(facture.ht, facture.charges);
+
+  $scope.facture = facture;
+
   $scope.goBack = function() {
     $ionicNavBarDelegate.back();
   };
+
+  $scope.valid = function(factureId, facturePayee) {
+    // Update the date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd='0'+dd;
+    } 
+
+    if(mm<10) {
+        mm='0'+mm;
+    } 
+    today = yyyy+'-'+mm+'-'+dd;
+
+    // We update the date
+    $scope.facture.date = newDate = today;
+
+    // We launch the services
+    Factures.editPayee(factureId, facturePayee, newDate);
+  };
 })
 
-.controller('FactureEditCtrl', function($scope, $stateParams, Factures, $ionicNavBarDelegate) {
-  $scope.facture = Factures.get($stateParams.factureId);
+.controller('FactureEditCtrl', function($scope, $stateParams, Factures, Calcul, $ionicNavBarDelegate) {
+  var facture = Factures.get($stateParams.factureId);
+
+  facture.ht = Calcul.toHt(parseInt(facture.totalFacture), parseInt(facture.tva));
+  //facture.tva = Calcul.toTva(facture.totalFacture, facture.tva);
+  //facture.charges = Calcul.toCharges(facture.ht, facture.charges);
+
+  $scope.facture = facture;
+
   $scope.goBack = function() {
     $ionicNavBarDelegate.back();
   };
   $scope.editFacture = function(newFacture) {
     Factures.editIndex(newFacture);
     $ionicNavBarDelegate.back();
-    /*if(newFacture.validation)
-      payee = newFacture.validation;
-    if(newFacture.ttc) {
-      // Faire le calcul en fonction du TTC.....
-    }*/
   };
   // When the totalHT or totalTTC are updating
   $scope.updatettc = function(){
-      var newValTtc = parseInt($scope.facture.ht) + parseInt($scope.facture.ht) * $scope.facture.tva / 100;
-      newValTtc = newValTtc.toFixed(2);
-
-      /*var newValTtc = parseInt($scope.facture.ht) + parseInt($scope.facture.ht) * $scope.facture.charges / 100;
-      newValTtc = newValTtc + newValTtc * $scope.facture.tva / 100;
-      newValTtc = newValTtc.toFixed(2);*/
-
-      document.getElementById('totalttc').value = newValTtc;
+      document.getElementById('totalttc').value = Calcul.toTtc($scope.facture.ht, $scope.facture.tva);
   };
   $scope.updateht = function(){
-      var newValHt = ($scope.facture.totalFacture * (100/($scope.facture.tva + 100))).toFixed(2);
+      document.getElementById('totalht').value = Calcul.toHt($scope.facture.totalFacture, $scope.facture.tva);
+  };
+})
 
-      /*var newValHt = $scope.facture.totalFacture * 100/($scope.facture.tva + 100);
-      newValHt = newValHt * 100/($scope.facture.charges + 100);
-      newValHt = newValHt.toFixed(2);*/
+.controller('FactureCreerCtrl', function($scope, $ionicNavBarDelegate, Factures, Preferences, Calcul) {
 
-      document.getElementById('totalht').value = newValHt;
+  $scope.preferences = Preferences.all();
+  $scope.factures = Factures.all();
+
+  $scope.goBack = function() {
+    $ionicNavBarDelegate.back();
+  };
+
+  $scope.createFacture = function(facture) {
+
+    var payee = false, total = 0;
+    if(facture.validation)
+      payee = facture.validation;
+    if(facture.ttc) {
+      total = facture.totalFacture;
+    } else {
+      total = Calcul.toTtc(facture.totalFacture, facture.tva);
+      //total = facture.totalFacture + facture.totalFacture * facture.charges / 100;
+    }
+
+    var newFacture = Factures.newFacture($scope.factures.length, facture.name, total, facture.tva, facture.charges, payee, facture.date);
+    $scope.factures.push(newFacture);
+    Factures.save($scope.factures);
+    $ionicNavBarDelegate.back();
   };
 })
 

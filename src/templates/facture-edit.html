@@ -7,7 +7,7 @@
   <ion-content has-header="true" padding="true">
   	<form ng-submit="editFacture(facture)">
 		<ion-list>
-			<ion-item class="item-avatar" type="item-text-wrap">
+			<ion-item class="item-avatar with-bottom" type="item-text-wrap">
 				<div class="row">
 				  <div class="col">Total HT</div>
 				  <div class="col">T.V.A.</div>
@@ -15,22 +15,22 @@
 				  <div class="col">Total TTC</div>
 				</div>
 			</ion-item>
-			<ion-item class="item-avatar item-stacked-label" type="item-text-wrap">
+			<ion-item class="item-avatar item-stacked-label with-top" type="item-text-wrap">
 	        	<div class="row">
 				  <!--<div class="col"><input id="totalht" type="text" value="{{(facture.totalFacture * 100/(facture.tva + 100) * 100/(facture.charges + 100)).toFixed(2)}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" /></div>-->
-				  <div class="col"><input id="totalht" type="text" value="{{(facture.totalFacture * (100/(facture.tva + 100))).toFixed(2)}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" /></div>
-				  <div class="col"><input type="text" value="{{facture.tva}}" ng-model="facture.tva" /></div>
-				  <div class="col"><input type="text" value="{{facture.charges}}" ng-model="facture.charges" /></div>
-				  <div class="col"><input id="totalttc" type="text" value="{{facture.totalFacture}}" ng-model="facture.totalFacture" init-from-form ng-model-onblur ng-change="updateht()" /></div>
+				  <div class="col"><input id="totalht" class="textnumber" type="text" value="{{facture.ht}}" ng-model="facture.ht" init-from-form ng-model-onblur ng-change="updatettc()" /></div>
+				  <div class="col"><input type="text" class="textpercent" value="{{facture.tva}}" ng-model="facture.tva" ng-model-onblur ng-change="updatettc()" /></div>
+				  <div class="col"><input type="text" class="textpercent" value="{{facture.charges}}" ng-model="facture.charges" /></div>
+				  <div class="col"><input id="totalttc" class="textnumber" type="text" value="{{facture.totalFacture}}" ng-model="facture.totalFacture" init-from-form ng-model-onblur ng-change="updateht()" /></div>
 				</div>
 			</ion-item>
-			<ion-item class="item-avatar" type="item-text-wrap">
+			<ion-item class="item-avatar with-bottom" type="item-text-wrap">
 				<div class="row">
 					<div class="col">Payée</div>
 					<div class="col">Date</div>
 				</div>
 			</ion-item>
-			<ion-item class="item-avatar item-stacked-label" type="item-text-wrap">
+			<ion-item class="item-avatar item-stacked-label with-top" type="item-text-wrap">
 				<div class="row">
 				  <div class="col"><ion-checkbox ng-checked="facture.payee" ng-model="facture.payee"></ion-checkbox></div>
 				  <div class="col"><input align="bottom" type="date" value="{{facture.date}}" ng-model="facture.date"></div>

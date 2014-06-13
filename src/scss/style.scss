@@ -24,7 +24,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 $black: #000;
 $white: #FFF;
 $greyfont: #F6F6F5;
-$greenone: #D1FB8B;
+/*$greenone: #D1FB8B;*/
+$greenone: #95D82A;
 $greentwo: #019159;
 $greenthree: #488F2B;
 $greenfour: #018F2A;
@@ -46,9 +47,27 @@ $reddelete : #EF4E3A;
 	height: 100.21%;
 }
 
+input[type="text"] {
+	text-align: left !important;
+	&.textnumber {
+		text-align: right !important;
+	}
+	&.textpercent {
+		text-align: center !important;
+	}
+}
+
+input[type="number"] {
+	text-align: right !important;
+	&.textpercent {
+		text-align: center !important;
+	}
+}
+
 #homecontainer {
 	p, h3, h4, h5 {
 		color: $white;
+		font-size: 16px;
 	}
 }
 
@@ -87,17 +106,22 @@ $reddelete : #EF4E3A;
 
 	h4, i, span {
 		color: $greyfont;
+
 	}
 	h4 {
 		float: left;
-		margin-left: 10px;
-		margin-top: 25px;
+		margin: 25px -14px 0 6px;
+		font-size: 22px;
+		font-family: 'Open Sans', sans-serif;
 	}
 	i {
     	margin-left: 48%;
 	}
+	.input-label {
+		font-weight: 400;
+	}
 	.ion-ios7-close-outline::before {
-		margin-top: 22px;
+		margin-top: 24px;
 	}
 	.item-stacked-label {
 		border: none;
@@ -130,6 +154,7 @@ $reddelete : #EF4E3A;
 		border: none;
 		color: $greyfont;
 		margin-top: -6px;
+		font-size: 14px;
 	}
 	.toggle-ttc {
 		width: 50%;
@@ -210,7 +235,7 @@ form.ng-submitted input.ng-valid + i.icon.error {
 		}
 		h4 {
 			text-align: center;
-			/*margin-left: -10px;*/
+			font-family: 'Open Sans', sans-serif;
 		}
 	}
 	.ion-ios7-minus-outline {
@@ -233,11 +258,21 @@ form.ng-submitted input.ng-valid + i.icon.error {
 	.item-avatar {
 		border: none;
 		background: $black;
+		min-height: 45px;
 		h2, .col {
 			color: $greyfont;
 		}
 		.col {
 			margin-left: -10px;
+			&.marked {
+				color: $greenfour;
+			}
+			&.bitRight {
+				margin-left: -20px;
+			}
+			&.bitRightHt {
+				margin-left: -30px;
+			}
 		}
 		&.item-complex {
 			.col {
@@ -247,10 +282,17 @@ form.ng-submitted input.ng-valid + i.icon.error {
 		a {
 			background: $black;
 			padding-left: 15px;
+			padding-top: 0;
+			padding-bottom: 0;
+			min-height: 45px;
 		}
 		.item-options {
-			top: 23%;
+			/*top: 23%;*/
 			height: 67%;
+		}
+		.item-right-edit {
+			height: 90%;
+			top: -2px;
 		}
 	}
 	$mr: -15px;
@@ -263,6 +305,8 @@ form.ng-submitted input.ng-valid + i.icon.error {
 			}
 			.col:nth-child(2) {
 				margin-right: $mr*2;
+				/*margin-left: $mr;
+				padding-left: 0;*/
 			}
 			.col:nth-child(3) {
 				margin-right: $mr*2;
@@ -275,11 +319,16 @@ form.ng-submitted input.ng-valid + i.icon.error {
 	.item-complex .col:nth-child(4) {
 		margin-right: $mr*3;
 	}
+	#ajouter-facture {
+		float: right;
+		color: $white;
+		margin-right: 10px;
+	}
 }
 
 /* PAGE FACTURE EN DÉTAILS */
 
-#page-facture {
+#page-facture, #page-creer-facture {
 	background: $black;
 	ion-nav-bar {
 		background: $black;
@@ -289,6 +338,7 @@ form.ng-submitted input.ng-valid + i.icon.error {
 		}
 		h1 {
 			color: $greyfont;
+			font-family: 'Open Sans', sans-serif;
 		}
 		#back, #edit {
 			background: $black;
@@ -307,6 +357,21 @@ form.ng-submitted input.ng-valid + i.icon.error {
 		color: $greyfont;
 		border: none;
 		padding-left: 0;
+		&.with-bottom {
+			padding-bottom: 0;
+			.row {
+				padding: 0;
+				.col {
+					padding-bottom: 0;
+				}
+			}
+		}
+		&.with-top {
+			padding-top: 0;
+			.row {
+				padding: 0;
+			}
+		}
 	}
 	.col {
 		text-align: center;
@@ -347,5 +412,56 @@ form.ng-submitted input.ng-valid + i.icon.error {
 	}
 	.item-avatar, .item-avatar .item-content, .item-avatar-left, .item-avatar-left .item-content {
 		min-height: 30px;
+	}
+}
+
+/* PAGE AJOUTER FACTURE */
+
+#page-creer-facture {
+	form#ajoutfacture {
+		.row {
+			padding-bottom: 0;
+			.col {
+				padding-top: 0;
+				padding-bottom: 0;
+				.item-avatar {
+					padding-left: 0;
+					/*padding-bottom: 0;*/
+					.input-label {
+						width: 100%;
+						float: left;
+						font-weight: 400;
+						color: $greyfont;
+						text-align: left;
+						&.totalht {
+							width: 100%;
+							max-width: none;
+						}
+					}
+					.error-toggle {
+						margin-right: 50%;
+						margin-top: 30px;
+					}
+				}
+				.input-toggle-ttc {
+					width: 50%;
+					float: left;
+					padding-top: 10px;
+					padding-bottom: 11px;
+				}
+				.item-toggle {
+					background: transparent;
+					border: none;
+					color: $greyfont;
+					font-size: 14px;
+				}
+				.toggle-ttc {
+					width: 50%;
+					float: left;
+					margin-top: -6px;
+					padding-bottom: 7px;
+				}
+			}
+		}
 	}
 }

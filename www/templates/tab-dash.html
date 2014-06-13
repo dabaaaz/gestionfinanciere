@@ -8,23 +8,23 @@
           <div class="row">
             <div id="colone" ng-click="goto('tab.factures')" class="col-50">
               <p>Environ</p>
-              <h3>{{(chiffresThatMonth.average).toFixed(2)}}€</h3>
+              <h3>{{(chiffresThatYear.average).toFixed(2)}}€</h3>
               <p>net par mois</p>
             </div>
             <div id="coltwo" ng-click="goto('tab.factures-ca')" class="col-50">
               <p>CA de<p>
-              <h4>{{(chiffresThatMonth.ca).toFixed(2)}}€</h4>
+              <h4>{{(chiffresThatYear.ca).toFixed(2)}}€</h4>
             </div>
           </div>
           <div class="row">
             <div id="colthree" ng-click="goto('tab.factures-tva')" class="col-50">
               <p>Total de</p>
-              <h5>{{(chiffresThatMonth.tva).toFixed(2)}}€</h5>
+              <h5>{{(chiffresThatYear.tva).toFixed(2)}}€</h5>
               <p>de T.V.A.</p>
             </div>
             <div id="colfour" ng-click="goto('tab.factures-charges')" class="col-50">
               <p>Total de</p>
-              <h5>{{(chiffresThatMonth.charges).toFixed(2)}}€</h5>
+              <h5>{{(chiffresThatYear.charges).toFixed(2)}}€</h5>
               <p>de charges</p>
             </div>
           </div>
@@ -39,11 +39,11 @@
         <ion-list>
           <ion-item class="item item-input item-stacked-label">
             <span class="input-label">Taux de T.V.A. (par défaut)</span>
-            <input type="text" value="20">
+            <input type="number" class="textpercent" min="0" max="100" ng-model-onblur ng-change="updateTvaAndCharges()" ng-model="preferences.tva">
           </ion-item>
           <ion-item class="item item-input item-stacked-label">
             <span class="input-label">Taux de charges (par défaut)</span>
-            <input type="text" value="30">
+            <input type="number" class="textpercent" name="charges" min="0" max="100" ng-model-onblur ng-change="updateTvaAndCharges()" ng-model="preferences.charges">
           </ion-item>
         </ion-list>
 
@@ -74,12 +74,12 @@
             </label>
             <label class="fiftycent item item-input item-stacked-label validated">
               <span class="input-label">Charges</span>
-              <input required="required" type="number" placeholder="30" name="charges" ng-model="facture.charges">
+              <input id="charges" required="required" class="textpercent" type="text" value="{{preferences.charges}}" name="charges" init-from-form ng-model="facture.charges">
               <i class="icon ion-alert-circled error"></i>
             </label>
             <label class="fiftycent item item-input item-stacked-label validated">
               <span class="input-label">T.V.A.</span>
-              <input required="required" type="number" placeholder="20" name="tva" ng-model="facture.tva">
+              <input id="tva" required="required" class="textpercent" type="text" value="{{preferences.tva}}" name="tva" init-from-form ng-model="facture.tva">
               <i class="icon ion-alert-circled error"></i>
             </label>
             <label class="item item-input item-stacked-label validated">

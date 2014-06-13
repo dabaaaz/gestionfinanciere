@@ -127,7 +127,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     //'www/js/output.min.js': ['src/**/*.js']
-                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js']
+                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js', 'src/js/directives.js', 'src/js/calculs.js']
                 }
             },
             build: {
@@ -138,7 +138,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     //'www/js/output.min.js': ['src/**/*.js']
-                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js']
+                    'www/js/output.min.js': ['src/js/app.js', 'src/js/controllers.js', 'src/js/services.js', 'src/js/directives.js', 'src/js/calculs.js']
                 }
             }
         },
