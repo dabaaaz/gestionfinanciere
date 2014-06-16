@@ -66,7 +66,6 @@ angular.module('starter.services', [])
       this.save(factures);
     },
     editPayee: function(factureId, facturePayee, newDate) {
-
       // We take the array of factures
       var factures = this.all();
 
@@ -98,6 +97,7 @@ angular.module('starter.services', [])
     },
     clearAll: function() {
       window.localStorage.clear();
+      alert("Init");
     }
   };
 })

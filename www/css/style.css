@@ -9154,6 +9154,10 @@ form.ng-submitted input.ng-valid + i.icon.error {
 }
 #tab-factures .item-avatar .col.bitRightHt {
   margin-left: -30px;
+  margin-top: -4px;
+}
+#tab-factures .item-avatar .col.bitTop {
+  margin-top: -4px;
 }
 #tab-factures .item-avatar.item-complex .col {
   font-size: 90%;
@@ -9198,6 +9202,11 @@ form.ng-submitted input.ng-valid + i.icon.error {
   float: right;
   color: white;
   margin-right: 10px;
+}
+#tab-factures #ajouter-facture::before {
+  margin-top: -12px;
+  position: relative;
+  z-index: 2;
 }
 
 /* PAGE FACTURE EN DÉTAILS, EDITER FACTURE ET AJOUTER FACTURE */
@@ -9296,8 +9305,8 @@ form.ng-submitted input.ng-valid + i.icon.error {
   padding-bottom: 4px;
 }
 #page-facture-edit label .showPercent {
-  margin-top: -26px;
-  margin-right: 15px;
+  margin-top: -27px;
+  margin-right: -6px;
 }
 
 /* PAGE AJOUTER FACTURE SURCOUCHE */

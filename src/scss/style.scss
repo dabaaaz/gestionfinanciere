@@ -285,6 +285,10 @@ form.ng-submitted input.ng-valid + i.icon.error {
 			}
 			&.bitRightHt {
 				margin-left: -30px;
+				margin-top: -4px;
+			}
+			&.bitTop {
+				margin-top: -4px;
 			}
 		}
 		&.item-complex {
@@ -336,6 +340,11 @@ form.ng-submitted input.ng-valid + i.icon.error {
 		float: right;
 		color: $white;
 		margin-right: 10px;
+		&::before {
+			margin-top: -12px;
+			position: relative;
+			z-index: 2
+		}
 	}
 }
 
@@ -437,8 +446,8 @@ form.ng-submitted input.ng-valid + i.icon.error {
 			padding-bottom: 4px;
 		}
 		.showPercent {
-			margin-top: -26px;
-			margin-right: 15px;
+			margin-top: -27px;
+			margin-right: -6px;
 		}
 	}
 

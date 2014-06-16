@@ -1,6 +1,9 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $timeout, $state, $ionicSideMenuDelegate, Factures, Preferences, Settings, Calcul, $ionicPopup, $ionicLoading) {
+  // Init the localStorage
+  //Factures.clearAll();
+
   // Sliding the left menu
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
@@ -30,13 +33,9 @@ angular.module('starter.controllers', [])
         subTitle: 'Celle-ci apparaîtra dans la liste de vos factures',
         template: '<ion-checkbox ng-model="modalAddFacture.checked" ng-change="modalAddFactureChange()">Ne plus afficher</ion-checkbox>'
       });
-
-      alertPopup.then(function(res) {
-       location.reload();
-      });
-    } else {
-      location.reload();
     }
+    $ionicSideMenuDelegate.toggleRight();
+    document.getElementById('ajoutfacture').reset();
   };
 
   // Load or initialize factures, settings and preferences
@@ -87,6 +86,7 @@ angular.module('starter.controllers', [])
       //total = facture.totalFacture + facture.totalFacture * facture.charges / 100;
     }
     createFacture(facture.name, total, facture.tva, facture.charges, payee, facture.date);
+    facture.name = facture.date = facture.totalFacture = "";
   };
 
   // Called to select the given facture
@@ -99,7 +99,6 @@ angular.module('starter.controllers', [])
   // this by using $timeout so everything is initialized
   // properly
   $timeout(function() {
-    console.log(settings.homeTuto);
     if($scope.factures.length === 0 && settings.homeTuto === 0) {
       var alertPopup = $ionicPopup.alert({
         title: 'Ajouter une facture',
@@ -217,15 +216,22 @@ angular.module('starter.controllers', [])
     $ionicNavBarDelegate.back();
   };
   $scope.editFacture = function(newFacture) {
+    // We convert the TTC, then we remove the ht index we no need to save
+    newFacture.totalFacture = Calcul.toTtc(newFacture.ht, newFacture.tva);
+    delete newFacture.ht;
+
     Factures.editIndex(newFacture);
+    console.log("rrr", newFacture);
     $ionicNavBarDelegate.back();
   };
   // When the totalHT or totalTTC are updating
-  $scope.updatettc = function(){
-      document.getElementById('totalttc').value = Calcul.toTtc($scope.facture.ht, $scope.facture.tva);
+  $scope.updatettc = function() {
+      var ttc = document.getElementById('totalttc');
+      ttc.value = Calcul.toTtc($scope.facture.ht, $scope.facture.tva);
   };
-  $scope.updateht = function(){
-      document.getElementById('totalht').value = Calcul.toHt($scope.facture.totalFacture, $scope.facture.tva);
+  $scope.updateht = function() {
+      var ht = document.getElementById('totalht');
+      ht.value = Calcul.toHt($scope.facture.totalFacture, $scope.facture.tva);
   };
 })
 

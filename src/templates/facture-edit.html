@@ -33,7 +33,7 @@
 				  </div>
 				  <div class="col">
 				  	<label class="item-avatar item-input item-stacked-label validated">
-					  	<input required="required" type="number" class="textpercent" value="{{facture.charges}}" ng-model="facture.charges" init-from-form />
+					  	<input required="required" type="number" class="textpercent" value="{{facture.charges}}" ng-model="facture.charges" init-from-form ng-model-onblur ng-change="updatettcFromCharges()" />
 					  	<i class="icon ion-alert-circled error"></i>
 					  	<span class="showPercent">%</span>
 				  	</label>
