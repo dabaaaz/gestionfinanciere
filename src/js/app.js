@@ -32,6 +32,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   console.log(post);
 })*/
 
+.run(function($ionicPlatform) {
+  // hide white screen after splash
+  $ionicPlatform.ready(function() {
+    setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 1000);
+  });
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
